@@ -37,6 +37,7 @@ export default function App() {
       <Route path="/catat" element={<Catat />} />
       <Route path="/riwayat" element={<Riwayat />} />
       <Route path="/catatan/:id" element={<Detail />} />
+      <Route path="/catatan/:id/ubah" element={<Catat />} />
       <Route path="/statistik" element={<Statistik />} />
       <Route path="/profil" element={<Profil />} />
       <Route path="*" element={<TidakAda />} />

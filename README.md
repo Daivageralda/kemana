@@ -45,10 +45,12 @@ Instead of a spreadsheet of numbers, every expense becomes a stop on today's ***
 | ⌨️ **Quick entry** | A big custom keypad with a `000` key, 8 categories and 4 payment methods (cash, debit, e-wallet, QRIS). |
 | 🔥 **History heat map** | A month calendar shaded by how much you spent each day, with a month picker and month-over-month change. |
 | 🧾 **Digital receipt** | Each entry opens as a receipt with a barcode, a small insight and a duplicate action. |
+| ✏️ **Edit entries** | The pencil on the receipt reopens the entry in the keypad screen to fix the amount, note, category or payment method. The original date and time are kept. |
 | 🧩 **Category mosaic** | Weekly, monthly or yearly breakdown as tiles sized by share. |
 | 🛂 **Passport profile** | A passport-style card with stamps for streaks, record count and favorite category. |
 | 🔔 **Daily reminder** | A local notification at a time you choose (21.00 by default). |
 | 📤 **CSV export** | Share every record as a CSV file you can open in Excel. |
+| 💾 **Automatic backup** | When switched on, a JSON copy of every record is written to `Documents/Kemana/` each time the app opens and after changes (at most hourly), keeping the last 7 days. Restore any of them from Profil → Data; files are validated before anything is replaced. |
 
 ## 📱 A tour of the app
 
@@ -200,9 +202,9 @@ pnpm exec cap open android
 
 Kemana works end to end, but it is not finished. Next up:
 
-- [ ] Edit an existing entry (the pencil on the receipt is a placeholder for now)
 - [ ] Search in history
-- [ ] Automatic backup to iCloud / Google Drive
+- [ ] Cloud backup. Today's backup is a local file: on iOS it rides along with the device's iCloud/iTunes backup and shows up in the Files app, but there is no direct iCloud Drive / Google Drive sync, and an Android backup stays on the device. One file per day means a later backup on the same day overwrites the earlier one (an empty database is never backed up).
+- [ ] Change the date and time of an existing entry
 - [ ] App lock with biometrics or PIN, and hiding amounts on the home screen
 - [ ] Encrypt the local database (it currently opens as `no-encryption`)
 - [ ] Custom categories, color themes and a custom month start

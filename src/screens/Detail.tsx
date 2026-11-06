@@ -78,8 +78,7 @@ export default function Detail() {
       <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 44, flexShrink: 0 }}>
         <button type="button" className="ibtn sq" style={{ background: 'var(--bg)', color: 'var(--pri)' }} aria-label="Kembali" onClick={() => nav(-1)}><CaretLeft size={18} weight="bold" /></button>
         <h1 style={{ fontSize: 16, fontWeight: 700 }}>Struk digital</h1>
-        {/* shortcut: ubah catatan belum dibuat, tombol hanya tampilan */}
-        <button type="button" className="ibtn sq" style={{ background: 'var(--bg)', color: 'var(--pri)' }} aria-label="Ubah catatan"><PencilSimple size={22} weight="fill" /></button>
+        <button type="button" className="ibtn sq" style={{ background: 'var(--bg)', color: 'var(--pri)' }} aria-label="Ubah catatan" onClick={() => nav(`/catatan/${c.id}/ubah`)}><PencilSimple size={22} weight="fill" /></button>
       </header>
 
       <div className="lift" style={{ position: 'relative', marginTop: 16, flexShrink: 0 }}>

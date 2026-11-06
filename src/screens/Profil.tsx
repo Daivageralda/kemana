@@ -3,14 +3,21 @@ import { useNavigate } from 'react-router-dom'
 import HeaderRingkas from '../components/HeaderRingkas'
 import LogoPita from '../components/LogoPita'
 import {
-  Bell, CalendarBlank, CaretLeft, CaretRight, Clock, CloudArrowUp, Coffee, CreditCard, Export, EyeSlash, Fire,
-  LockKey, NotePencil, Palette, Receipt, SquaresFour, Trash, UserCircle, type Icon,
+  Bell, CalendarBlank, CaretLeft, CaretRight, Clock, ClockCounterClockwise, CloudArrowUp, Coffee, CreditCard, Export, EyeSlash, Fire,
+  LockKey, NotePencil, Palette, Receipt, SquaresFour, Trash, UserCircle, X, type Icon,
 } from '@phosphor-icons/react'
-import { hapusSemuaCatatan, semuaCatatan, type Catatan } from '../data/catatan'
+import { gantiSemuaCatatan, hapusSemuaCatatan, semuaCatatan, type Catatan } from '../data/catatan'
+import { aturCadangan, cadangkan, cadanganAktif, cadanganTerakhir, daftarCadangan, type FileCadangan } from '../data/cadangan'
 import { beruntun, favorit, keCsv } from '../lib/profil'
+import { teksTerakhir } from '../lib/cadangan'
 import { aturPengingat, bagikanCsv, jamPengingat, pengingatAktif } from '../lib/perangkat'
 
 const sq = (r: number, s?: CSSProperties) => ({ '--r': `${r}px`, ...s }) as CSSProperties
+// "cadangan-2026-11-06.json" -> "Kam, 6 Nov 2026"
+const tglCadangan = (nama: string) => {
+  const [y, m, d] = nama.slice(9, 19).split('-').map(Number)
+  return new Date(y, m - 1, d).toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })
+}
 
 type Baris =
   | { ikon: Icon; nama: string; sub: string; jenis: 'sakelar'; on: boolean; ubah: () => void; jam?: string; ubahJam?: (v: string) => void }
@@ -34,6 +41,9 @@ export default function Profil() {
   const [ingat, setIngat] = useState(false)
   const [jam, setJam] = useState(jamPengingat)
   const [sibuk, setSibuk] = useState(false)
+  const [cadang, setCadang] = useState(cadanganAktif)
+  const [terakhir, setTerakhir] = useState(cadanganTerakhir)
+  const [pilihan, setPilihan] = useState<FileCadangan[] | null>(null)
 
   const muat = () => semuaCatatan().then(setDaftar, (e) => console.error(e))
   useEffect(() => {
@@ -81,6 +91,52 @@ export default function Profil() {
     }
     setSibuk(false)
   }
+  const ubahCadangan = async () => {
+    const mau = !cadang
+    aturCadangan(mau)
+    setCadang(mau)
+    if (!mau) return
+    setSibuk(true)
+    try {
+      const t = await cadangkan()
+      if (t) setTerakhir(t)
+      else alert('Belum ada catatan untuk dicadangkan. Cadangan dibuat otomatis setelah kamu mencatat.')
+    } catch (e) {
+      console.error(e)
+      alert('Cadangan pertama gagal dibuat. Akan dicoba lagi saat aplikasi dibuka.')
+    }
+    setSibuk(false)
+  }
+  const bukaPulihkan = async () => {
+    setSibuk(true)
+    try {
+      const d = await daftarCadangan()
+      if (d.length) setPilihan(d)
+      else alert('Belum ada file cadangan. Nyalakan "Cadangkan otomatis" dulu, ya.')
+    } catch (e) {
+      console.error(e)
+      alert('Daftar cadangan gagal dibaca. Coba lagi, ya.')
+    }
+    setSibuk(false)
+  }
+  const pulihkan = async (f: FileCadangan) => {
+    if (!f.catatan) return
+    if (!confirm(`Ganti ${n} catatan sekarang dengan ${f.catatan.length} catatan dari cadangan ${tglCadangan(f.nama)}? Catatan yang tidak ada di cadangan akan hilang.`)) return
+    setSibuk(true)
+    try {
+      await gantiSemuaCatatan(f.catatan)
+      setPilihan(null)
+      await muat()
+      alert(`Berhasil. ${f.catatan.length} catatan dipulihkan.`)
+      // file hari ini ikut berisi data yang baru dipulihkan
+      if (cadang) setTerakhir(await cadangkan() ?? terakhir)
+    } catch (e) {
+      // executeSet berjalan dalam satu transaksi, jadi data lama tetap utuh
+      console.error(e)
+      alert('Cadangan gagal dipulihkan. Data lama tidak berubah.')
+    }
+    setSibuk(false)
+  }
   const hapusSemua = async () => {
     if (!n || !confirm(`Hapus semua ${n} catatan? Ini tidak bisa dibatalkan.`)) return
     setSibuk(true)
@@ -109,7 +165,8 @@ export default function Profil() {
     ] },
     data: { nama: 'Data', cls: 'p-tagihan', baris: [
       { ikon: CreditCard, nama: 'Sumber dana', sub: 'Tunai, debit, e-wallet, QRIS', jenis: 'segera' },
-      { ikon: CloudArrowUp, nama: 'Cadangkan otomatis', sub: 'Ke iCloud atau Google Drive', jenis: 'segera' },
+      { ikon: CloudArrowUp, nama: 'Cadangkan otomatis', sub: teksTerakhir(terakhir, kini), jenis: 'sakelar', on: cadang, ubah: ubahCadangan },
+      { ikon: ClockCounterClockwise, nama: 'Pulihkan cadangan', sub: 'Pilih dari 7 cadangan terakhir', jenis: 'aksi', jalan: bukaPulihkan },
       { ikon: Export, nama: 'Ekspor CSV', sub: `${n} catatan, buka di Excel`, jenis: 'aksi', jalan: ekspor },
       { ikon: Trash, nama: 'Hapus semua data', sub: 'Tidak bisa dibatalkan', jenis: 'aksi', bahaya: true, jalan: hapusSemua },
     ] },
@@ -194,7 +251,7 @@ export default function Profil() {
               )
             }
             if (b.jenis === 'sakelar') {
-              return <button key={b.nama} type="button" role="switch" aria-checked={b.on} className="sq" style={gaya} onClick={b.ubah}>{isi}<span className={b.on ? 'sw on' : 'sw'} aria-hidden="true" /></button>
+              return <button key={b.nama} type="button" role="switch" aria-checked={b.on} className="sq" style={gaya} disabled={sibuk} onClick={b.ubah}>{isi}<span className={b.on ? 'sw on' : 'sw'} aria-hidden="true" /></button>
             }
             if (b.jenis === 'aksi') {
               return <button key={b.nama} type="button" className="sq" style={gaya} disabled={sibuk} onClick={b.jalan}>{isi}<span style={{ display: 'flex', color: 'var(--ink2)' }}><CaretRight size={14} weight="bold" /></span></button>
@@ -203,6 +260,28 @@ export default function Profil() {
           })}
         </div>
       </div>
+      {pilihan && (
+        <div role="dialog" aria-modal="true" aria-label="Pulihkan cadangan" onClick={() => setPilihan(null)}
+          style={{ position: 'fixed', inset: 0, zIndex: 40, display: 'flex', alignItems: 'flex-end', background: 'rgba(14,14,16,.45)' }}>
+          <div className="sq" onClick={(e) => e.stopPropagation()}
+            style={sq(28, { width: '100%', padding: '18px 16px calc(env(safe-area-inset-bottom) + 16px)', background: 'var(--bg)' })}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+              <h2 style={{ fontSize: 18, fontWeight: 800 }}>Pulihkan cadangan</h2>
+              <button type="button" className="ibtn sq" aria-label="Tutup" onClick={() => setPilihan(null)}><X size={18} weight="bold" /></button>
+            </div>
+            <p className="t2" style={{ marginBottom: 10 }}>Isi catatan sekarang akan diganti dengan isi cadangan yang dipilih.</p>
+            {pilihan.map((f) => (
+              <button key={f.nama} type="button" className="item" disabled={sibuk || !f.catatan} onClick={() => pulihkan(f)} style={{ opacity: f.catatan ? 1 : 0.5 }}>
+                <span className="grow">
+                  <span className="t1">{tglCadangan(f.nama)}</span>
+                  <span className="t2">{f.catatan ? `${f.catatan.length} catatan` : f.galat}</span>
+                </span>
+                {f.catatan && <span style={{ display: 'flex', color: 'var(--ink2)' }}><CaretRight size={14} weight="bold" /></span>}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       <HeaderRingkas ambang={60} latar="var(--p)">
         <button type="button" className="ibtn sq" style={sq(11, { width: 36, height: 36, background: 'var(--bg)' })} aria-label="Kembali" onClick={() => nav(-1)}><CaretLeft size={16} weight="bold" /></button>
         <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: -0.3 }}>Profil</span>

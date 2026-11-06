@@ -5,6 +5,7 @@ import '@fontsource-variable/urbanist'
 import './styles/kemana.css'
 import './styles/base.css'
 import App from './App.tsx'
+import { cadangkanOtomatis } from './data/cadangan'
 
 // HashRouter: aman di WebView Capacitor tanpa konfigurasi server
 createRoot(document.getElementById('root')!).render(
@@ -14,3 +15,5 @@ createRoot(document.getElementById('root')!).render(
     </HashRouter>
   </StrictMode>,
 )
+
+void cadangkanOtomatis(true)
