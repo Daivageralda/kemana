@@ -1,0 +1,13 @@
+/* lapisan halaman: tinggi penuh dan ruang aman notch/home bar di iOS & Android */
+html, body, #root { height: 100%; margin: 0; }
+body { background: #fff; overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
+.screen {
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: calc(env(safe-area-inset-top) + 10px) 20px calc(env(safe-area-inset-bottom) + 20px);
+}
+/* baris geser horizontal tanpa scrollbar */
+.geser { scrollbar-width: none; }
+.geser::-webkit-scrollbar { display: none; }
+/* tanpa jeda 300ms double-tap zoom: keypad harus terasa instan */
+button, a, input { touch-action: manipulation; }

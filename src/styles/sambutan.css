@@ -1,0 +1,127 @@
+/* Sambutan: animasi latar terus berjalan sampai pengguna mengetuk lanjut */
+.sbt {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: calc(env(safe-area-inset-top) + 10px) 24px calc(env(safe-area-inset-bottom) + 20px);
+  transition: background-color .5s ease, color .5s ease;
+  isolation: isolate; /* lapisan latar (z-index -1) tetap di atas warna latar, di bawah konten */
+}
+
+/* latar kontur slide 1: muncul pelan lalu bergeser sangat lambat */
+.sbt-kontur { animation: sbt-muncul 1.2s ease both, sbt-hanyut 40s ease-in-out infinite alternate; }
+@keyframes sbt-muncul { from { opacity: 0; } }
+@keyframes sbt-hanyut { to { transform: translate(-18px, -26px) rotate(-3deg) scale(1.05); } }
+
+/* latar slide 3: piringan jam, jarum detik satu putaran per menit */
+.sbt-jam { animation: sbt-muncul 1.2s ease both; }
+.sbt-detik { transform-box: view-box; transform-origin: 210px 210px; animation: sbt-putar 60s linear infinite; }
+
+/* latar slide 2: grid titik ala kertas grafik; sorotan lembut berkeliling memperjelas sebagian titik */
+.sbt-titik {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(14, 14, 16, .16) 1.2px, transparent 1.7px);
+  background-size: 18px 18px;
+  background-position: 9px 9px;
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, .35) 60%, rgba(0, 0, 0, .12) 100%);
+  mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, .35) 60%, rgba(0, 0, 0, .12) 100%);
+  -webkit-mask-size: 180% 120%;
+  mask-size: 180% 120%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: sbt-muncul 1.2s ease both, sbt-sorot 16s ease-in-out infinite alternate;
+}
+@keyframes sbt-sorot {
+  0% { -webkit-mask-position: 0% 100%; mask-position: 0% 100%; }
+  50% { -webkit-mask-position: 100% 60%; mask-position: 100% 60%; }
+  100% { -webkit-mask-position: 30% 0%; mask-position: 30% 0%; }
+}
+
+/* indikator cerita: bar halaman aktif terisi saat masuk */
+.sbt-bar { flex: 1; height: 4px; border-radius: 2px; overflow: hidden; background: var(--rel); }
+.sbt-bar i { display: block; height: 100%; width: 0; background: var(--isi); }
+.sbt-bar.lewat i { width: 100%; }
+.sbt-bar.kini i { animation: sbt-isi 1.4s cubic-bezier(.2, .7, .2, 1) forwards; }
+@keyframes sbt-isi { to { width: 100%; } }
+
+/* pergantian halaman dan teks yang naik satu per satu */
+.sbt-ganti { animation: sbt-ganti .5s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes sbt-ganti { from { opacity: 0; transform: translateX(28px); } }
+.sbt-naik { animation: sbt-naik .7s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i, 0) * 90ms + 120ms); }
+@keyframes sbt-naik { from { opacity: 0; transform: translateY(26px); } }
+
+/* halaman 1: orbit berputar, pin berdenyut, ubin melayang, nominal muncul-hilang */
+.sbt-putar { transform-box: fill-box; transform-origin: center; animation: sbt-putar 40s linear infinite; }
+.sbt-putar.balik { animation-duration: 64s; animation-direction: reverse; }
+@keyframes sbt-putar { to { transform: rotate(360deg); } }
+.sbt-denyut { animation: sbt-denyut 2.4s ease-in-out infinite; }
+@keyframes sbt-denyut { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+.sbt-riak { position: absolute; border-radius: 50%; border: 2px solid var(--acc); animation: sbt-riak 2.4s ease-out infinite; animation-delay: var(--d, 0s); }
+@keyframes sbt-riak { from { transform: scale(.6); opacity: .8; } to { transform: scale(1.9); opacity: 0; } }
+.sbt-apung { animation: sbt-apung var(--t, 5s) ease-in-out infinite; animation-delay: var(--d, 0s); }
+@keyframes sbt-apung {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-11px) rotate(calc(var(--rot, 0deg) + 3deg)); }
+}
+.sbt-letup { animation: sbt-letup 4.2s ease-in-out infinite; animation-delay: var(--d, 0s); }
+@keyframes sbt-letup {
+  0% { opacity: 0; transform: translateY(10px) scale(.8); }
+  12%, 70% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(-16px); }
+}
+
+/* konten yang berganti: ikon meletup masuk, teks bergeser masuk, warna sel berpindah halus */
+.sbt-pop { display: flex; animation: sbt-pop .55s cubic-bezier(.3, 1.6, .5, 1) both; }
+@keyframes sbt-pop { from { opacity: 0; transform: scale(.3) rotate(-25deg); } }
+.sbt-geser { display: inline-block; animation: sbt-geser .45s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes sbt-geser { from { opacity: 0; transform: translateY(8px); } }
+.sbt-sel { transition: background-color .6s ease; }
+.sbt-orbit { transition: left 1s cubic-bezier(.5, 0, .2, 1), top 1s cubic-bezier(.5, 0, .2, 1); }
+
+/* halaman 2: gelombang kalender panas, stabilo menyapu, api berkedip */
+.sbt-gel { animation: sbt-gel 3.6s ease-in-out infinite; animation-delay: var(--d, 0s); }
+@keyframes sbt-gel { 0%, 24%, 100% { transform: scale(1); filter: none; } 10% { transform: scale(1.2); filter: brightness(1.12); } }
+.sbt-stabilo {
+  position: relative;
+  z-index: -1; /* di belakang teks baris atas supaya ekor huruf g/y tidak tertutup */
+  padding: 0 10px;
+  border-radius: 14px;
+  background: linear-gradient(var(--acc), var(--acc)) no-repeat 0 0 / 0% 100%;
+  animation: sbt-sapu .9s .55s cubic-bezier(.6, 0, .2, 1) forwards;
+}
+@keyframes sbt-sapu { to { background-size: 100% 100%; } }
+.sbt-nyala { display: inline-flex; animation: sbt-nyala 1.2s ease-in-out infinite; }
+@keyframes sbt-nyala { 0%, 100% { transform: scale(1) rotate(-5deg); } 50% { transform: scale(1.18) rotate(5deg); } }
+
+/* halaman 3: tumpukan notifikasi, batang grafik naik turun, tombol berkilau */
+/* kartu bergeser antar-lapisan dengan sedikit pantulan; kartu baru jatuh dari atas ke depan */
+.sbt-tumpuk {
+  transform-origin: top center;
+  transition: transform .7s cubic-bezier(.2, .9, .25, 1.12), opacity .6s ease, box-shadow .6s ease;
+}
+.sbt-tumpuk.depan { box-shadow: 0 14px 28px rgba(14, 14, 16, .14); animation: sbt-tumpuk .75s cubic-bezier(.2, .9, .25, 1.12) both; }
+@keyframes sbt-tumpuk { from { transform: translateY(-46px) scale(1.06); opacity: 0; } }
+.sbt-batang { transform-origin: bottom; animation: sbt-batang 2.4s ease-in-out infinite; animation-delay: var(--d, 0s); }
+@keyframes sbt-batang { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.55); } }
+.sbt-kilau { position: relative; overflow: hidden; }
+.sbt-kilau::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .32) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: sbt-kilau 2.8s ease-in-out infinite;
+}
+@keyframes sbt-kilau { 55%, 100% { transform: translateX(100%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .sbt *, .sbt *::after { animation: none !important; }
+  .sbt-bar.kini i { width: 100%; }
+  .sbt-stabilo { background-size: 100% 100%; }
+}

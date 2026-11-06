@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Kemana</string>
+    <string name="title_activity_main">Kemana</string>
+    <string name="package_name">com.kemana.app</string>
+    <string name="custom_url_scheme">com.kemana.app</string>
+</resources>
