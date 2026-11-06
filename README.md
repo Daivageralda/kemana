@@ -2,119 +2,191 @@
   <img src="docs/banner.png" alt="Kemana: Uangmu ke mana aja, sih?" width="100%">
 </p>
 
-<h1 align="center">Kemana</h1>
-
 <p align="center">
-  <b><i>"Uangmu ke mana aja, sih?"</i></b><br>
-  <sub>Where did all your money go?</sub>
+  <img alt="React 19" src="https://img.shields.io/badge/React_19-0D6B67?style=for-the-badge&logo=react&logoColor=white">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript_7-0D6B67?style=for-the-badge&logo=typescript&logoColor=white">
+  <img alt="Vite 8" src="https://img.shields.io/badge/Vite_8-0D6B67?style=for-the-badge&logo=vite&logoColor=white">
+  <img alt="Capacitor 8" src="https://img.shields.io/badge/Capacitor_8-0D6B67?style=for-the-badge&logo=capacitor&logoColor=white">
+  <img alt="SQLite" src="https://img.shields.io/badge/SQLite_local--first-F2B01E?style=for-the-badge&logo=sqlite&logoColor=0E0E10">
 </p>
 
 <p align="center">
-  <img alt="React 19" src="https://img.shields.io/badge/React-19-0D6B67?logo=react&logoColor=white">
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-7-0D6B67?logo=typescript&logoColor=white">
-  <img alt="Vite 8" src="https://img.shields.io/badge/Vite-8-0D6B67?logo=vite&logoColor=white">
-  <img alt="Capacitor 8" src="https://img.shields.io/badge/Capacitor-8-0D6B67?logo=capacitor&logoColor=white">
-  <img alt="SQLite" src="https://img.shields.io/badge/SQLite-local--first-F2B01E?logo=sqlite&logoColor=white">
-  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-F2B01E">
+  <a href="#-features">Features</a> ·
+  <a href="#-a-tour-of-the-app">Tour</a> ·
+  <a href="#-design-system">Design</a> ·
+  <a href="#-architecture">Architecture</a> ·
+  <a href="#-getting-started">Getting started</a> ·
+  <a href="#-roadmap">Roadmap</a>
 </p>
 
-**Kemana** is a personal expense tracker for Indonesian users, built with web technology and shipped as a native app with Capacitor. Every expense becomes a stop on today's *jejak* (trail), so you can see at a glance where your rupiah went, morning to night. All data stays on your phone in a local SQLite database: no account, no server, no tracking.
+<br>
 
-The interface is in Bahasa Indonesia.
+<img src="docs/readme/demo.gif" alt="Kemana demo: today's trail, history, statistics and quick entry" width="270" align="right">
 
-## Features
+### *"Uangmu ke mana aja, sih?"*
+<sub>Where did all your money go?</sub>
 
-- **Today's trail (Jejak hari ini).** Today's expenses form a winding path down the home screen. Its background shifts through teal shades from morning (*pagi*) to night (*malam*).
-- **Fast entry (Catat).** A big custom keypad with a `000` key, 8 pastel categories and 4 payment methods (cash, debit, e-wallet, QRIS). Saving takes a few taps.
-- **History heatmap (Riwayat).** A month calendar shaded from light to dark by how much you spent each day, with a month picker and month-over-month change.
-- **Digital receipt (Detail).** Every entry opens as a receipt with a barcode, a small insight ("Nasi padang for the 4th time this month…") and a duplicate action.
-- **Category mosaic (Statistik).** A weekly, monthly or yearly breakdown drawn as tiles sized by share, with the biggest category called out in the headline.
-- **Passport profile (Profil).** A passport-style card with stamps for streaks, record count and favorite category.
-- **Daily reminder.** A local notification at a time you choose (21.00 by default).
-- **CSV export.** Share all records as a CSV file you can open in Excel.
-- **Onboarding.** Three animated welcome slides.
+**Kemana** is a personal expense tracker for Indonesian users, built with web technology and shipped as a native app with Capacitor.
 
-## Screenshots
+Instead of a spreadsheet of numbers, every expense becomes a stop on today's ***jejak***, a trail that winds down the home screen from morning to night. A heat-map calendar shows which days ran hot, and a category mosaic shows where the month went.
+
+- 🔒 **Local-first.** Everything lives in SQLite on your phone. No account, no server, no tracking.
+- ⚡ **Fast to log.** Amount, category, payment method, save. A few taps.
+- 🇮🇩 **Made for Indonesia.** Rupiah formatting (`Rp 1,37jt`), QRIS and e-wallets as payment methods, an interface fully in Bahasa Indonesia.
+- 🎨 **Designed, not templated.** Squircles, a teal-and-turmeric palette, one pastel per category, a hand-built logo.
+
+<br clear="right">
+
+## ✨ Features
+
+| | |
+| --- | --- |
+| 🧭 **Today's trail** | Today's expenses form a winding path whose background shifts from morning to night. |
+| ⌨️ **Quick entry** | A big custom keypad with a `000` key, 8 categories and 4 payment methods (cash, debit, e-wallet, QRIS). |
+| 🔥 **History heat map** | A month calendar shaded by how much you spent each day, with a month picker and month-over-month change. |
+| 🧾 **Digital receipt** | Each entry opens as a receipt with a barcode, a small insight and a duplicate action. |
+| 🧩 **Category mosaic** | Weekly, monthly or yearly breakdown as tiles sized by share. |
+| 🛂 **Passport profile** | A passport-style card with stamps for streaks, record count and favorite category. |
+| 🔔 **Daily reminder** | A local notification at a time you choose (21.00 by default). |
+| 📤 **CSV export** | Share every record as a CSV file you can open in Excel. |
+
+## 📱 A tour of the app
 
 <table>
   <tr>
-    <td align="center"><img src="docs/screenshots/beranda.png" width="220"><br><sub>Beranda: home</sub></td>
-    <td align="center"><img src="docs/screenshots/beranda-jejak.png" width="220"><br><sub>Jejak: today's trail</sub></td>
-    <td align="center"><img src="docs/screenshots/catat.png" width="220"><br><sub>Catat: new expense</sub></td>
-    <td align="center"><img src="docs/screenshots/detail.png" width="220"><br><sub>Detail: digital receipt</sub></td>
+    <td width="50%" align="center"><img src="docs/readme/phone-beranda-jejak.png" width="250" alt="Home screen with today's trail"></td>
+    <td width="50%">
+      <h3>Beranda: today's trail</h3>
+      <p>The month's spending in big type, a trend line, and today's expenses connected by a dotted path. Card positions are derived from each record's id, so the trail looks hand-drawn but never jumps between renders.</p>
+    </td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/screenshots/riwayat.png" width="220"><br><sub>Riwayat: history heatmap</sub></td>
-    <td align="center"><img src="docs/screenshots/statistik.png" width="220"><br><sub>Statistik: category mosaic</sub></td>
-    <td align="center"><img src="docs/screenshots/profil.png" width="220"><br><sub>Profil: passport &amp; settings</sub></td>
-    <td align="center"><img src="docs/screenshots/homescreen.png" width="220"><br><sub>Home-screen icon</sub></td>
+    <td width="50%">
+      <h3>Catat: log it in seconds</h3>
+      <p>A dark, focused screen with a custom keypad. Pick one of eight pastel categories and a payment method, add an optional note, and save.</p>
+    </td>
+    <td width="50%" align="center"><img src="docs/readme/phone-catat.png" width="250" alt="Quick entry screen"></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/screenshots/sambutan-1.png" width="220"><br><sub>Welcome 1/3</sub></td>
-    <td align="center"><img src="docs/screenshots/sambutan-2.png" width="220"><br><sub>Welcome 2/3</sub></td>
-    <td align="center"><img src="docs/screenshots/sambutan-3.png" width="220"><br><sub>Welcome 3/3</sub></td>
-    <td align="center"><img src="docs/screenshots/splash.png" width="220"><br><sub>Splash</sub></td>
+    <td width="50%" align="center"><img src="docs/readme/phone-riwayat.png" width="250" alt="History heat map"></td>
+    <td width="50%">
+      <h3>Riwayat: the heat map</h3>
+      <p>Days shade from pale yellow to deep turmeric as spending rises. Tap a day to see its entries; switch months with the native month picker.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>Detail: a digital receipt</h3>
+      <p>Every entry becomes a receipt with a scalloped edge and a barcode, plus an insight like <i>"Nasi padang for the 4th time this month, 43% of your food spending."</i></p>
+    </td>
+    <td width="50%" align="center"><img src="docs/readme/phone-detail.png" width="250" alt="Digital receipt"></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><img src="docs/readme/phone-statistik.png" width="250" alt="Category mosaic"></td>
+    <td width="50%">
+      <h3>Statistik: the mosaic</h3>
+      <p>The biggest category gets the headline and the biggest tile. Switch between week, month and year; smaller categories collapse into progress bars.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>Profil: your money passport</h3>
+      <p>A passport card with a machine-readable zone, travel stamps earned from your habits, and tabbed settings (the daily reminder and data export work today; privacy options are marked "Segera").</p>
+    </td>
+    <td width="50%" align="center"><img src="docs/readme/phone-profil.png" width="250" alt="Passport profile"></td>
   </tr>
 </table>
 
-<sub>Screenshots from the iOS Simulator (iPhone 17 Pro) with demo data.</sub>
+### First launch
 
-## Design highlights
+<p align="center">
+  <img src="docs/readme/welcome.png" alt="Three animated welcome slides" width="100%">
+</p>
 
-- **Squircles everywhere.** Cards and buttons use iOS-style continuous corners (about 60% corner smoothing), drawn with CSS `clip-path: shape()` and falling back to a plain `border-radius` on older engines. See `.sq` in [`src/styles/kemana.css`](src/styles/kemana.css).
-- **Toska & Kunyit palette.** Deep teal `#0D6B67` paired with turmeric yellow `#F2B01E`, plus near-black ink for the entry screen and dock.
-- **A pastel per category.** Food, snacks, transport, shopping, bills, entertainment, health and other each get their own soft background and icon color, reused on the trail, the receipt and the mosaic.
-- **A trail that looks random but stays put.** [`src/lib/jejak.ts`](src/lib/jejak.ts) derives each card's horizontal position from a hash of its id, so the path winds differently every day but never jumps between renders. Entries are grouped into *pagi / siang / sore / malam*, and the background gradient follows the time of day.
-- **The "Pita" logo.** A lowercase *k* tied like a ribbon, with a turmeric dot. It is defined once as SVG paths in [`src/lib/logo.ts`](src/lib/logo.ts), used by the in-app component and by [`scripts/logo.mjs`](scripts/logo.mjs), which renders the app icon and splash sources.
+<details>
+<summary><b>More screenshots</b> (splash, home, home-screen icon)</summary>
+<br>
+<p align="center">
+  <img src="docs/screenshots/splash.png" width="200" alt="Splash screen">&nbsp;
+  <img src="docs/screenshots/beranda.png" width="200" alt="Home screen top">&nbsp;
+  <img src="docs/screenshots/homescreen.png" width="200" alt="App icon on the iOS home screen">
+</p>
+</details>
 
-## Tech stack & architecture
+<sub>Screenshots and demo recorded on the iOS Simulator (iPhone 17 Pro) with demo data.</sub>
+
+## 🎨 Design system
+
+<p align="center">
+  <img src="docs/readme/design.png" alt="Kemana design system: palette, time-of-day colors, category pastels, squircle and typography" width="100%">
+</p>
+
+- **Squircles everywhere.** iOS-style continuous corners (about 60% smoothing) drawn with CSS `clip-path: shape()`, falling back to `border-radius` on older engines. See `.sq` in [`src/styles/kemana.css`](src/styles/kemana.css).
+- **Toska & Kunyit.** Deep teal `#0D6B67` with turmeric `#F2B01E`, plus near-black ink for the entry screen and dock.
+- **One pastel per category**, each pairing a soft background with an accent at ≥ 4.3:1 contrast, reused on the trail, receipt, history and mosaic.
+- **Time of day.** Entries are grouped into *pagi, siang, sore, malam*, and the trail's background follows along.
+- **The "Pita" logo.** A lowercase *k* tied like a ribbon, with a turmeric dot. Defined once as SVG paths in [`src/lib/logo.ts`](src/lib/logo.ts) and rendered into the app icon and splash by [`scripts/logo.mjs`](scripts/logo.mjs).
+
+## 🏗 Architecture
+
+```mermaid
+flowchart LR
+  UI["src/screens · React 19<br/>Beranda · Catat · Riwayat<br/>Detail · Statistik · Profil"]
+  UI --> LIB["src/lib<br/>pure logic + unit tests<br/>(trail, summaries, stats, stamps)"]
+  UI --> DATA["src/data<br/>schema, queries, categories"]
+  DATA --> SQL[("SQLite<br/>@capacitor-community/sqlite")]
+  UI --> DEV["src/lib/perangkat.ts"]
+  DEV --> PLUG["Capacitor plugins<br/>local-notifications · filesystem · share"]
+```
+
+```
+src/
+├── screens/      one file per screen: Sambutan, Beranda, Catat, Riwayat, Detail, Statistik, Profil
+├── components/   shared pieces: Dock, HeaderRingkas, LogoPita
+├── lib/          pure logic (trail layout, summaries, statistics, profile stamps) + tests
+├── data/         SQLite connection, schema, record queries, categories & payment methods
+└── styles/       design tokens, squircle, pastel classes
+scripts/logo.mjs  renders the logo into assets/ for @capacitor/assets
+```
+
+Calculations live in `src/lib` as plain functions with no React or Capacitor imports, so they run under Node's built-in test runner. In the browser (`pnpm dev`) the same SQLite schema runs on `jeep-sqlite` (sql.js + IndexedDB), so the whole app works without a device.
 
 | Layer | Choice |
 | --- | --- |
 | UI | React 19, React Router 7, TypeScript 7, Phosphor Icons, Urbanist variable font |
 | Build | Vite 8, oxlint, pnpm |
 | Native shell | Capacitor 8 (iOS project included; Android project generated but not yet tested) |
-| Storage | SQLite through `@capacitor-community/sqlite`; in the browser, `jeep-sqlite` (sql.js + IndexedDB) |
+| Storage | SQLite via `@capacitor-community/sqlite`; `jeep-sqlite` in the browser |
 | Device | `@capacitor/local-notifications`, `filesystem`, `share`, `status-bar`, `splash-screen` |
 
-```
-src/
-├── screens/      one file per screen: Sambutan, Beranda, Catat, Riwayat, Detail, Statistik, Profil
-├── components/   shared pieces: Dock, HeaderRingkas, LogoPita
-├── lib/          pure logic (trail layout, summaries, statistics, profile stamps) + unit tests
-├── data/         SQLite connection, schema, record queries, categories & payment methods
-└── styles/       design tokens, squircle, pastel classes
-scripts/logo.mjs  renders the logo into assets/ for @capacitor/assets
-```
+## 🚀 Getting started
 
-Calculations live in `src/lib` as plain functions with no React or Capacitor imports, so they are tested with Node's built-in test runner. The screens only read from `src/data` and render.
-
-## Getting started
-
-Requirements: Node 22+, pnpm, and Xcode for iOS or Android Studio for Android.
+Requirements: Node 22+, pnpm, and Xcode for iOS (Android Studio for Android).
 
 ```bash
 pnpm install
-pnpm dev            # runs in the browser, with SQLite in IndexedDB
+pnpm dev        # runs in the browser, SQLite stored in IndexedDB
 ```
 
-**iOS**
+<details>
+<summary><b>Run on iOS</b></summary>
 
 ```bash
 pnpm build
 pnpm exec cap sync ios
-pnpm exec cap open ios   # then Run in Xcode
+pnpm exec cap open ios   # then press Run in Xcode
 ```
+</details>
 
-**Android** (not tested yet, see the roadmap)
+<details>
+<summary><b>Run on Android</b> (not tested yet)</summary>
 
 ```bash
 pnpm build
 pnpm exec cap sync android
 pnpm exec cap open android
 ```
-
-### Scripts
+</details>
 
 | Command | What it does |
 | --- | --- |
@@ -124,11 +196,11 @@ pnpm exec cap open android
 | `pnpm lint` | oxlint |
 | `pnpm logo` | Re-render the "Pita" logo, then generate iOS/Android icons and splash screens |
 
-## Roadmap
+## 🗺 Roadmap
 
-Kemana works end to end, but it is not finished. Planned next:
+Kemana works end to end, but it is not finished. Next up:
 
-- [ ] Edit an existing entry (the pencil button on the receipt is a placeholder for now)
+- [ ] Edit an existing entry (the pencil on the receipt is a placeholder for now)
 - [ ] Search in history
 - [ ] Automatic backup to iCloud / Google Drive
 - [ ] App lock with biometrics or PIN, and hiding amounts on the home screen
@@ -137,6 +209,8 @@ Kemana works end to end, but it is not finished. Planned next:
 - [ ] Receipt photo capture
 - [ ] Build and test on Android (so far it has only run on the iOS Simulator)
 
-## License
+## 📄 License
 
 [MIT](LICENSE) © 2026 Daivageralda
+
+<p align="center"><sub>Dibuat dengan ☕ dan banyak nasi padang.</sub></p>
